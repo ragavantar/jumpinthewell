@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { Engine, Render, World, Bodies, Body } from 'matter-js';
 
+class App extends Component {
+  state = {  }
+
+  componentDidMount() {
+  
+  const engine = Engine.create();
+
+  const render = Render.create({
+    element: document.getElementById('game'),
+    engine: engine,
+    options: {
+      width: window.innerWidth,
+      height: window.innerHeight - 100,
+      wireframes: false
+    }
+  });
+  
+  const box = Bodies.rectangle(
+    260, 120, 40, 40, 
+    { isStatic: true, 
+      render: {fillStyle: 'yellow'} 
+    });
+
+  World.add(engine.world, box);
+
+
+  Engine.run(engine);
+
+  Render.run(render);
+}
+  
+  render() { 
+    return ( 
+      <React.Fragment>
+
+      <div id="game">
+
+      </div>
+      <button> horizontal wall</button>
+      <button> angled wall</button>
+      </React.Fragment>
+     );
+  }
+}
+ 
 export default App;
